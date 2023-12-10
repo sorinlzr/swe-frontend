@@ -1,0 +1,11 @@
+.tabpanel {
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+    transition: opacity 0.5s ease-in-out, height 0.5s ease-in-out;
+}
+
+.tabpanel.active {
+    opacity: 1;
+    height: auto;
+}
