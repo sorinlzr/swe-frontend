@@ -11,10 +11,16 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import { User } from '../../models/User';
 
-import axios, {AxiosResponse} from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
-export default function Login({ setLoggedIn }: { setLoggedIn: React.Dispatch<React.SetStateAction<boolean>> }) {
+interface LoginProps {
+    setCurrentUser: (i: User) => void;
+}
+
+export default function Login(props: LoginProps) {
+    const { setCurrentUser } = props;
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
@@ -22,15 +28,19 @@ export default function Login({ setLoggedIn }: { setLoggedIn: React.Dispatch<Rea
             username: formData.get('username'),
             password: formData.get('password'),
         };
-        console.log({
-            user: user
-        });
 
         try {
-            const response: AxiosResponse = await axios.post(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/api/auth/login`, user);
-            if (response.status === (200 | 201) ) {
-                setLoggedIn(true); 
-                console.log('User successfully logged in!');
+            const response: AxiosResponse = await axios.post(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/api/auth/login`,
+                user,
+                {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    withCredentials: true
+                }
+            );
+            if (response.status === (200 || 201)) {
+                setCurrentUser(response.data);
             } else {
                 console.error('Error logging in user');
             }

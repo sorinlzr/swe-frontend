@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
 import logo from './logo.png';
 import styled from 'styled-components';
 import './App.css';
 import SignInRegister from './containers/SignInRegister';
 import Homepage from './containers/Homepage';
+import { User } from './models/User';
 
 
 const AppContainer = styled.div`
@@ -26,16 +28,22 @@ const Logo = styled.img`
 `;
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState<User>({} as User);
+  const [cookies] = useCookies(['swe-backend-cookie']);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    setIsLoggedIn(cookies['swe-backend-cookie'] ? true : false);
+  }, [cookies]);
 
   return (
     <AppContainer>
       <CenteredContainer>
-        <Logo src={logo} className="App-logo" alt="logo"/>
-        {loggedIn ? (
-          <Homepage />
+        <Logo src={logo} className="App-logo" alt="logo" />
+        {isLoggedIn ? (
+          <Homepage currentUser={currentUser} />
         ) : (
-          <SignInRegister setLoggedIn={setLoggedIn}/>
+          <SignInRegister setCurrentUser={setCurrentUser} />
         )}
       </CenteredContainer>
     </AppContainer>

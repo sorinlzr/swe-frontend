@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import Login from '../components/authentication/Login';
 import Register from '../components/authentication/Register';
 import { Card } from '@mui/material';
+import { User } from '../models/User';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -43,12 +44,12 @@ function a11yProps(index: number) {
 }
 
 interface SignInRegisterProps {
-  setLoggedIn: (i: boolean) => void;
+  setCurrentUser: (i: User) => void;
 }
 
 export default function SignInRegister(props: SignInRegisterProps) {
   const [value, setValue] = React.useState(0);
-  const {setLoggedIn} = props;
+  const { setCurrentUser} = props;
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -63,7 +64,7 @@ export default function SignInRegister(props: SignInRegisterProps) {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <Login setLoggedIn={() => setLoggedIn(true)} />
+        <Login setCurrentUser={setCurrentUser} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         <Register/>
