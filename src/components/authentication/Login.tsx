@@ -20,7 +20,10 @@ interface LoginProps {
 }
 
 export default function Login(props: LoginProps) {
+    const [loginSuccess, setLoginSuccess] = React.useState(false);
+    const [errorMessage, setErrorMessage] = React.useState('');
     const { setCurrentUser } = props;
+
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
@@ -40,12 +43,22 @@ export default function Login(props: LoginProps) {
                 }
             );
             if (response.status === (200 || 201)) {
+                setLoginSuccess(true);
+                setErrorMessage('');
                 setCurrentUser(response.data);
             } else {
+                setLoginSuccess(false);
+                setErrorMessage('Error logging in user');
                 console.error('Error logging in user');
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error('Error:', error);
+            setLoginSuccess(false);
+            if (error.response && error.response.data.message) {
+            setErrorMessage(error.response.data.message);
+            } else {
+            setErrorMessage('An error occurred. Please check your input');
+            }
         }
     };
 
@@ -66,6 +79,9 @@ export default function Login(props: LoginProps) {
                 <Typography component="h1" variant="h5">
                     Sign in
                 </Typography>
+                {!loginSuccess && errorMessage && (
+                <Typography color="error">{errorMessage}</Typography>
+                )}
                 <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                     <TextField
                         margin="normal"
@@ -99,19 +115,19 @@ export default function Login(props: LoginProps) {
                     >
                         Sign In
                     </Button>
-                    <Grid container>
-                        <Grid item xs>
-                            <Link href="#" variant="body2">
-                                Forgot password?
-                            </Link>
-                        </Grid>
-                        <Grid item>
-                            <Link href="#" variant="body2">
-                                {"Don't have an account? Sign Up"}
-                            </Link>
-                        </Grid>
-                    </Grid>
                 </Box>
+                <Grid container>
+                    <Grid item xs>
+                        <Link href="#" variant="body2">
+                            Forgot password?
+                        </Link>
+                    </Grid>
+                    <Grid item>
+                        <Link href="#" variant="body2">
+                            {"Don't have an account? Sign Up"}
+                        </Link>
+                    </Grid>
+                </Grid>
             </Box>
         </Container>
     );

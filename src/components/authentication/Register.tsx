@@ -13,32 +13,53 @@ import axios from 'axios';
 
 export default function Register() {
 
+  const initialFormData = {
+    firstname: '',
+    lastname: '',
+    username: '',
+    email: '',
+    password: '',
+  };
+
+  const [registrationSuccess, setRegistrationSuccess] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState('');
+  const [formData, setFormData] = React.useState(initialFormData);
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const user = {
-        firstname: formData.get('firstName'),
-        lastname: formData.get('lastName'),
-        email: formData.get('email'),
-        username: formData.get('username'),
-        password: formData.get('password'),
-      };
-
-    console.log({
-      user: user
-    });
 
     try {
-        const response = await axios.post(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/api/users`, user);
+        const response = await axios.post(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/api/users`, formData);
   
         if (response.status === (201)) {
+          setRegistrationSuccess(true);
+          setErrorMessage('');
+          setFormData(initialFormData);
           console.log('User successfully registered!');
         } else {
+          setRegistrationSuccess(false);
+          setErrorMessage('Error registering user');
           console.error('Error registering user');
         }
-      } catch (error) {
-        console.error('Error:', error);
+      } catch (error: any) {
+        console.error('Error:');
+        console.log(error);
+
+        setRegistrationSuccess(false);
+        if (error.response && error.response.data.error) {
+          setErrorMessage(error.response.data.error);
+        } else {
+          setErrorMessage('An error occurred. Please check your input');
+        }
       }
+  };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
   };
 
   return (
@@ -58,27 +79,37 @@ export default function Register() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
+          {!registrationSuccess && errorMessage && (
+          <Typography color="error">{errorMessage}</Typography>
+          )}
+          {registrationSuccess && (
+            <Typography color="primary">You can now login.</Typography>
+          )}
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
-                  name="firstName"
+                  name="firstname"
                   required
                   fullWidth
-                  id="firstName"
+                  id="firstname"
                   label="First Name"
                   autoFocus
+                  value={formData.firstname}
+                  onChange={handleInputChange}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   required
                   fullWidth
-                  id="lastName"
+                  id="lastname"
                   label="Last Name"
-                  name="lastName"
+                  name="lastname"
                   autoComplete="family-name"
+                  value={formData.lastname}
+                  onChange={handleInputChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -89,6 +120,8 @@ export default function Register() {
                   label="Username"
                   name="username"
                   autoComplete="Username"
+                  value={formData.username}
+                  onChange={handleInputChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -99,6 +132,8 @@ export default function Register() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -110,6 +145,8 @@ export default function Register() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  value={formData.password}
+                  onChange={handleInputChange}
                 />
               </Grid>
             </Grid>
