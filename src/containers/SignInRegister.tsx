@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
@@ -6,7 +7,7 @@ import Box from '@mui/material/Box';
 import Login from '../components/authentication/Login';
 import Register from '../components/authentication/Register';
 import { Card } from '@mui/material';
-import { User } from '../models/User';
+import { Link as RouterLink } from 'react-router-dom';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -44,30 +45,41 @@ function a11yProps(index: number) {
 }
 
 interface SignInRegisterProps {
-  setCurrentUser: (i: User) => void;
+  tab: "login" | "register";
 }
 
 export default function SignInRegister(props: SignInRegisterProps) {
   const [value, setValue] = React.useState(0);
-  const { setCurrentUser} = props;
+  const [currentTab, setCurrentTab] = React.useState("login");
+
+  useEffect(() => {
+    setCurrentTab(props.tab)
+    setValue(props.tab === 'login' ? 0 : 1)
+  }, [props.tab]
+  );
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
+    setCurrentTab(newValue === 0 ? "login" : "register");
   };
 
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Sign In" {...a11yProps(0)} />
-          <Tab label="Register" {...a11yProps(1)} />
+          <RouterLink to="/login">
+            <Tab label="Sign In" {...a11yProps(0)} />
+          </RouterLink>
+          <RouterLink to="/register">
+            <Tab label="Register" {...a11yProps(1)} />
+          </RouterLink>
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <Login setCurrentUser={setCurrentUser} />
+        <Login />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <Register/>
+        <Register />
       </CustomTabPanel>
     </Box>
   );

@@ -11,18 +11,14 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { User } from '../../models/User';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
 import axios, { AxiosResponse } from 'axios';
 
-interface LoginProps {
-    setCurrentUser: (i: User) => void;
-}
-
-export default function Login(props: LoginProps) {
+export default function Login() {
     const [loginSuccess, setLoginSuccess] = React.useState(false);
     const [errorMessage, setErrorMessage] = React.useState('');
-    const { setCurrentUser } = props;
+    const navigate = useNavigate();
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -45,7 +41,7 @@ export default function Login(props: LoginProps) {
             if (response.status === (200 || 201)) {
                 setLoginSuccess(true);
                 setErrorMessage('');
-                setCurrentUser(response.data);
+                navigate("/");
             } else {
                 setLoginSuccess(false);
                 setErrorMessage('Error logging in user');
@@ -54,8 +50,8 @@ export default function Login(props: LoginProps) {
         } catch (error: any) {
             console.error('Error:', error);
             setLoginSuccess(false);
-            if (error.response && error.response.data.message) {
-            setErrorMessage(error.response.data.message);
+            if (error.response && error.response.data.error) {
+            setErrorMessage(error.response.data.error);
             } else {
             setErrorMessage('An error occurred. Please check your input');
             }
@@ -123,9 +119,11 @@ export default function Login(props: LoginProps) {
                         </Link>
                     </Grid>
                     <Grid item>
-                        <Link href="#" variant="body2">
-                            {"Don't have an account? Sign Up"}
-                        </Link>
+                        <RouterLink to="/register">
+                            <Link href="/register" variant="body2">
+                                {"Don't have an account? Sign Up"}
+                            </Link>
+                        </RouterLink>
                     </Grid>
                 </Grid>
             </Box>
