@@ -1,40 +1,66 @@
-import { User } from '../../models/User';
-import UserAvatar from './UserAvatar';
-
+import AddIcon from '@mui/icons-material/Add';
+import { User } from "../../models/User";
+import UserAvatar from "./UserAvatar";
 
 interface UserProfileProps {
     user?: User;
 }
 
+interface Favorite {
+    _id: string;
+    name: string;
+    type: { name: string };
+}
+
 export default function UserProfile(props: UserProfileProps) {
-    const {user} = props;
+    const { user } = props;
+
+    const renderFavorites = () => {
+        if (!user?.favorites) {
+            return null;
+        }
+
+        const favoritesToRender = user.favorites.slice(0, 4);
+
+        return (
+            <>
+                {favoritesToRender.map((favorite: Favorite) => (
+                    <div key={favorite._id} className="favorite-box">
+                        <h3>{favorite.type.name}</h3>
+                        <p>{favorite.name}</p>
+                    </div>
+                ))}
+                {Array.from({ length: 4 - favoritesToRender.length }).map(
+                    (_, index) => (
+                        <div
+                            key={`placeholder-${index}`}
+                            className="favorite-box placeholder"
+                        >
+                            <span>Add a favorite</span>
+                            <AddIcon sx={{ fontSize: 60 }}/>
+                        </div>
+                    )
+                )}
+            </>
+        );
+    };
 
     return (
-        <> {user ? (
-            <>
-                <UserAvatar
-                    user={user}
-                    isHorizontal={false}
-                    hideName={false}
-                />
-                <h2 className="favorites-heading">
-                    {user?.firstname}'s favorites
-                </h2>
-                <div className="favorites-grid">
-                    {user?.favorites
-                        ?.slice(0, 4)
-                        .map((favorite: any) => (
-                            <div
-                                key={favorite._id}
-                                className="favorite-box"
-                            >
-                                <h3>{favorite.type.name}</h3>
-                                <p>{favorite.name}</p>
-                            </div>
-                        ))}
-                </div>
-            </>
-        ) : null}
+        <>
+            {" "}
+            {user ? (
+                <>
+                    <UserAvatar
+                        user={user}
+                        isHorizontal={false}
+                        hideName={false}
+                    />
+                    <h2 className="favorites-heading">
+                        {user?.firstname}'s favorites
+                    </h2>
+                    <div className="favorites-grid">{renderFavorites()}</div>
+                </>
+            ) : null}
         </>
     );
 }
