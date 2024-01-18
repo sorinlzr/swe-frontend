@@ -3,6 +3,7 @@ export interface JwtPayload {
     username: string,
     firstname: string,
     lastname: string,
+    avatar: string,
     exp: number,
     iat: number
 }
