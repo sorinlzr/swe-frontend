@@ -6,6 +6,7 @@ import { User } from "../../models/User";
 import { useCookies } from "react-cookie";
 import UserAvatar from "./UserAvatar";
 import ErrorPage from "../../routes/error-page";
+import UserProfile from "./UserProfile";
 
 export default function PublicProfileView() {
     const [currentUser, setCurrentUser] = useState<User>({} as User);
@@ -34,27 +35,7 @@ export default function PublicProfileView() {
                 <ErrorPage />
             ) : currentUser ? (
                 <>
-                    <UserAvatar
-                        user={currentUser}
-                        isHorizontal={false}
-                        hideName={false}
-                    />
-                    <h2 className="favorites-heading">
-                        {currentUser?.username}'s favorites
-                    </h2>
-                    <div className="favorites-grid">
-                        {currentUser?.favorites
-                            ?.slice(0, 4)
-                            .map((favorite: any, index: number) => (
-                                <div
-                                    key={favorite._id}
-                                    className="favorite-box"
-                                >
-                                    <h3>{favorite.type.name}</h3>
-                                    <p>{favorite.name}</p>
-                                </div>
-                            ))}
-                    </div>
+                    <UserProfile user={currentUser} />
                 </>
             ) : null}
         </>
