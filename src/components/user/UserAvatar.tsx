@@ -1,7 +1,5 @@
-import {IconButton, Avatar} from "@mui/material";
-import { useState } from "react";
+import { IconButton, Avatar } from "@mui/material";
 import { User } from "../../models/User";
-import { useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/material";
 
@@ -47,13 +45,6 @@ export default function UserAvatar({
     isHorizontal = false,
     hideName = true,
 }: UserAvatarProps) {
-    const navigate = useNavigate();
-
-    const handleClick = (event: React.MouseEvent) => {
-        event.preventDefault();
-        navigate(`/user/${user.username}`);
-    };
-
     return (
         <>
             <Box
@@ -62,12 +53,12 @@ export default function UserAvatar({
                 alignItems="center"
                 gap={isHorizontal ? 2 : 0}
             >
-                <IconButton onClick={handleClick}>
+                <IconButton href={`/user/${user.username}`}>
                     <Avatar
                         {...stringAvatar(user)}
                         sx={
                             isHorizontal
-                                ? { width: 50, height: 50 }
+                                ? { width: 45, height: 45 }
                                 : { width: 100, height: 100 }
                         }
                         src={user.avatar}
