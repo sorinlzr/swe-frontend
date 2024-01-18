@@ -1,6 +1,10 @@
-import AddIcon from '@mui/icons-material/Add';
+import AddIcon from "@mui/icons-material/Add";
 import { User } from "../../models/User";
 import UserAvatar from "./UserAvatar";
+import { useEffect, useState } from "react";
+import { JwtPayload } from "../../models/JwtPayload";
+import { useCookies } from "react-cookie";
+import { jwtDecode } from "jwt-decode";
 
 interface UserProfileProps {
     user?: User;
@@ -13,7 +17,21 @@ interface Favorite {
 }
 
 export default function UserProfile(props: UserProfileProps) {
+    const [cookies] = useCookies(["swe-backend-cookie"]);
     const { user } = props;
+    const [isCurrentUserLoggedInUser, setIsCurrentUserLoggedInUser] =
+        useState(false);
+
+    useEffect(() => {
+        let decoded: JwtPayload;
+
+        if (cookies["swe-backend-cookie"]) {
+            decoded = jwtDecode(cookies["swe-backend-cookie"]);
+            if (decoded.id === user?.id) {
+                setIsCurrentUserLoggedInUser(true);
+            }
+        }
+    }, [cookies, user?.id]);
 
     const renderFavorites = () => {
         if (!user?.favorites) {
@@ -30,17 +48,21 @@ export default function UserProfile(props: UserProfileProps) {
                         <p>{favorite.name}</p>
                     </div>
                 ))}
-                {Array.from({ length: 4 - favoritesToRender.length }).map(
-                    (_, index) => (
-                        <div
-                            key={`placeholder-${index}`}
-                            className="favorite-box placeholder"
-                        >
-                            <span>Add a favorite</span>
-                            <AddIcon sx={{ fontSize: 60 }}/>
-                        </div>
-                    )
-                )}
+                {user.id && isCurrentUserLoggedInUser ? (
+                    <>
+                        {Array.from({
+                            length: 4 - favoritesToRender.length,
+                        }).map((_, index) => (
+                            <div
+                                key={`placeholder-${index}`}
+                                className="favorite-box placeholder"
+                            >
+                                <span>Add a favorite</span>
+                                <AddIcon sx={{ fontSize: 60 }} />
+                            </div>
+                        ))}
+                    </>
+                ) : null}
             </>
         );
     };

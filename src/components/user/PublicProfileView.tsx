@@ -3,14 +3,11 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { User } from "../../models/User";
-import { useCookies } from "react-cookie";
-import UserAvatar from "./UserAvatar";
 import ErrorPage from "../../routes/error-page";
 import UserProfile from "./UserProfile";
 
 export default function PublicProfileView() {
-    const [currentUser, setCurrentUser] = useState<User>({} as User);
-    const [cookies] = useCookies(["swe-backend-cookie"]);
+    const [user, setUser] = useState<User>({} as User);
     const [fetchError, setFetchError] = useState(false);
     const { username } = useParams();
 
@@ -19,7 +16,7 @@ export default function PublicProfileView() {
             const { data } = await axios.get(
                 `http://localhost:${process.env.REACT_APP_BACKEND_PORT}/api/users/${username}`
             );
-            setCurrentUser(data.user);
+            setUser(data.user);
         } catch (err: any) {
             setFetchError(true);
         }
@@ -33,9 +30,9 @@ export default function PublicProfileView() {
         <>
             {fetchError ? (
                 <ErrorPage />
-            ) : currentUser ? (
+            ) : user ? (
                 <>
-                    <UserProfile user={currentUser} />
+                    <UserProfile user={user} />
                 </>
             ) : null}
         </>
