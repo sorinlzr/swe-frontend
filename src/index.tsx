@@ -7,6 +7,7 @@ import App from "./routes/App";
 import ErrorPage from "./routes/error-page";
 import SignInRegister from "./containers/SignInRegister";
 import PublicProfileView from "./components/user/PublicProfileView";
+import Navbar from "./components/navbar/Navbar";
 
 const root = ReactDOM.createRoot(
     document.getElementById("root") as HTMLElement
@@ -40,6 +41,7 @@ const router = createBrowserRouter([
 root.render(
     <CookiesProvider defaultSetOptions={{ path: "/" }}>
         <React.StrictMode>
+            <Navbar />
             <RouterProvider router={router} />
         </React.StrictMode>
     </CookiesProvider>
