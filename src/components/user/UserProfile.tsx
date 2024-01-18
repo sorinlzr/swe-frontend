@@ -18,7 +18,7 @@ export default function UserProfile(props: UserProfileProps) {
                     hideName={false}
                 />
                 <h2 className="favorites-heading">
-                    {user?.username}'s favorites
+                    {user?.firstname}'s favorites
                 </h2>
                 <div className="favorites-grid">
                     {user?.favorites
