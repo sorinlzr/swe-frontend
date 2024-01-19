@@ -38,7 +38,7 @@ function getFavoriteMessage(favoriteType: string) {
     case "Artist":
       return <p className="favorite-description-text">Listening to</p>;
     case "Song":
-      return <p className="favorite-description-text">Listening to</p>;
+      return <p className="favorite-description-text">Playing on repeat</p>;
     case "Movie":
       return <p className="favorite-description-text">Watching</p>;
     case "Book":

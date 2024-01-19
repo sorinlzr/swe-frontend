@@ -7,7 +7,7 @@ import ErrorPage from "../../routes/error-page";
 import UserProfile from "./UserProfile";
 
 export default function PublicProfileView() {
-    const [user, setUser] = useState<User>({} as User);
+    const [user, setUser] = useState<User | undefined>(undefined);
     const [fetchError, setFetchError] = useState(false);
     const { username } = useParams();
 
@@ -32,7 +32,7 @@ export default function PublicProfileView() {
                 <ErrorPage />
             ) : user ? (
                 <>
-                    <UserProfile user={user} />
+                    <UserProfile user={user} setUser={setUser}/>
                 </>
             ) : null}
         </>

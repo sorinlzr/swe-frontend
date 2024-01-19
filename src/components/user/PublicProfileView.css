@@ -25,6 +25,7 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     transition: box-shadow 0.3s ease;
+    position: relative;
 }
 
 .favorite-box.placeholder {
@@ -51,4 +52,14 @@
     .favorites-grid {
         grid-template-columns: 1fr; /* Switch to a single column layout */
     }
+}
+
+.cover-art {
+    max-width: 100%;
+}
+
+.delete-icon {
+    position: absolute !important;
+    top: 5px;
+    right: 5px;
 }

@@ -1,3 +1,5 @@
+import { Favorite } from "./Favorite";
+
 export interface User {
     id: string;
     firstname: string;
@@ -5,6 +7,6 @@ export interface User {
     username: string;
     email?: string;
     avatar?: string;
-    followedUsers?: [];
-    favorites?: [];
+    followedUsers?: User[];
+    favorites?: Favorite[];
 }
