@@ -85,7 +85,7 @@ export default function Navbar() {
                         <>
                             <UserAvatar
                                 user={currentUser}
-                                isHorizontal={true}
+                                size="small"
                             />
                             <Button
                                 color="inherit"

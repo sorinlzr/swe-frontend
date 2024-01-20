@@ -33,7 +33,12 @@ const Homepage = (props: HomepageProps) => {
             <div>
                 <h1>Welcome to Buzz!</h1>
             </div>
-            <UserAvatar user={currentUser} isHorizontal={false} />
+            <UserAvatar
+                user={currentUser}
+                isHorizontal={false}
+                hideName={false}
+                size="large"
+            />
             <h2>{"Hello, " + currentUser?.firstname}</h2>
             <Button
                 type="submit"

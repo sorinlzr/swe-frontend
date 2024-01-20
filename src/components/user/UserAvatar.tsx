@@ -38,41 +38,56 @@ interface UserAvatarProps {
     user: User;
     isHorizontal?: boolean;
     hideName?: boolean;
+    size?: "small" | "medium" | "large";
 }
+
+const avatarSize = {
+    small: { width: 45, height: 45 },
+    medium: { width: 75, height: 75 },
+    large: { width: 100, height: 100 },
+};
+
+const typographyFontWeight = {
+    small: 400,
+    medium: 600,
+    large: 800,
+};
+
+const typographyFontSize = {
+    small: 15,
+    medium: 20,
+    large: 25,
+};
 
 export default function UserAvatar({
     user,
     isHorizontal = false,
     hideName = true,
+    size = "large",
 }: UserAvatarProps) {
     return (
         <>
+            {" "}
             <Box
                 display="flex"
                 flexDirection={isHorizontal ? "row" : "column"}
                 alignItems="center"
-                gap={isHorizontal ? 2 : 0}
+                gap={isHorizontal ? 1 : 0}
             >
                 <IconButton href={`/user/${user.username}`}>
                     <Avatar
                         {...stringAvatar(user)}
-                        sx={
-                            isHorizontal
-                                ? { width: 45, height: 45 }
-                                : { width: 100, height: 100 }
-                        }
+                        sx={avatarSize[size]}
                         src={user.avatar}
                     />
                 </IconButton>
                 {!hideName && (
                     <Typography
-                        component="h1"
-                        variant={isHorizontal ? "h6" : "h5"}
-                        sx={
-                            isHorizontal
-                                ? { fontWeight: 400 }
-                                : { fontWeight: 800 }
-                        }
+                        component="span"
+                        sx={{
+                            fontWeight: typographyFontWeight[size],
+                            fontSize: typographyFontSize[size],
+                        }}
                     >
                         {user.firstname}
                     </Typography>
