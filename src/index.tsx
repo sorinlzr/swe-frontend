@@ -8,6 +8,8 @@ import ErrorPage from "./routes/error-page";
 import SignInRegister from "./containers/SignInRegister";
 import PublicProfileView from "./components/user/PublicProfileView";
 import Navbar from "./components/navbar/Navbar";
+import GlobalView from "./routes/GlobalView";
+import FollowingView from "./routes/FollowingView";
 
 const root = ReactDOM.createRoot(
     document.getElementById("root") as HTMLElement
@@ -26,6 +28,14 @@ const router = createBrowserRouter([
     {
         path: "/logout",
         element: <App />,
+    },
+    {
+        path: "/global",
+        element: <GlobalView />,
+    },
+    {
+        path: "/following",
+        element: <FollowingView />,
     },
     {
         path: "/register",

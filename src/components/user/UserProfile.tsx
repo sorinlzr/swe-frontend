@@ -147,30 +147,24 @@ export default function UserProfile(props: UserProfileProps) {
         return (
             <>
                 {favoritesToRender.map((favorite: Favorite) => (
-                    <Tooltip
-                        disableFocusListener
-                        disableTouchListener
-                        title={favorite.name}
-                    >
-                        <div key={favorite._id} className="favorite-box">
-                            <FavoriteComponent
-                                textOrientation="top"
-                                favorite={favorite}
-                            />
-                            {user.id && isCurrentUserLoggedInUser ? (
-                                <>
-                                    <IconButton
-                                        className="delete-icon"
-                                        onClick={() =>
-                                            handleDeleteFavorite(favorite._id)
-                                        }
-                                    >
-                                        <DeleteOutlinedIcon fontSize="small" />
-                                    </IconButton>
-                                </>
-                            ) : null}
-                        </div>
-                    </Tooltip>
+                    <div key={favorite._id} className="favorite-box">
+                        <FavoriteComponent
+                            textOrientation="top"
+                            favorite={favorite}
+                        />
+                        {user.id && isCurrentUserLoggedInUser ? (
+                            <>
+                                <IconButton
+                                    className="delete-icon"
+                                    onClick={() =>
+                                        handleDeleteFavorite(favorite._id)
+                                    }
+                                >
+                                    <DeleteOutlinedIcon fontSize="small" />
+                                </IconButton>
+                            </>
+                        ) : null}
+                    </div>
                 ))}
                 {user.id && isCurrentUserLoggedInUser ? (
                     <>

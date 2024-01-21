@@ -1,0 +1,33 @@
+.favorite-container .favorite-image {
+    max-width: 90%;
+    max-height: 100%;
+}
+
+select {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+    background-color: #fff;
+    max-width: 200px;
+    min-width: 200px;
+    align-self: center;
+}
+
+option {
+    font-size: 16px;
+    max-width: 200px;
+}
+
+.category-dropdown {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.category-dropdown p {
+    margin-right: 25px;
+}
