@@ -1,14 +1,21 @@
 .favorite-container {
     display: flex;
-    border: 8px outset rgb(119, 37, 123);
-    color: rgba(0, 0, 0, 0.87);
+
     align-self: center;
-    border-radius: 10px;
     min-height: 200px;
     max-height: 200px;
     width: 75%;
     overflow: hidden;
     margin-top: 5px;
+
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5.2px);
+    -webkit-backdrop-filter: blur(5.2px);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    color: #ffffff;
+
 }
 
 .favorite-container .user-avatar {
@@ -22,4 +29,6 @@
     flex-direction: row;
     width: 100%;
     padding: 3px;
+    color: #ffffff;
+
 }

@@ -62,7 +62,7 @@ export default function Navbar() {
 
     return (
         <Box sx={{ pt: 9 }}>
-            <AppBar position="fixed">
+            <AppBar position="fixed" sx={{ backgroundColor: "rgba(255, 255, 255, 0.1)" }}>
                 <Toolbar>
                     <IconButton
                         size="large"
@@ -77,7 +77,7 @@ export default function Navbar() {
                     <Typography
                         variant="h6"
                         component="div"
-                        sx={{ flexGrow: 1 }}
+                        sx={{ flexGrow: 1, fontFamily: 'Contrail One, sans-serif' }}
                     >
                         Menu
                     </Typography>
@@ -90,13 +90,26 @@ export default function Navbar() {
                             <Button
                                 color="inherit"
                                 onClick={handleLogout}
+                                sx={{
+                                    fontFamily: 'Contrail One, sans-serif',
+                                    '&:hover': {
+                                        backgroundColor: '#F4BA11',
+                                    },
+                                }}
                                 href="/"
                             >
                                 Logout
                             </Button>
                         </>
                     ) : (
-                        <Button color="inherit" href="/">
+                        <Button color="inherit"
+                        sx={{
+                            fontFamily: 'Contrail One, sans-serif',
+                            '&:hover': {
+                                backgroundColor: '#F4BA11',
+                            },
+                        }} 
+                        href="/">
                             Login
                         </Button>
                     )}

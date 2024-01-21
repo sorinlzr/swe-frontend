@@ -66,7 +66,8 @@ export default function SignInRegister(props: SignInRegisterProps) {
             <CenteredContainer>
                 <Logo height={"100px"} />
                 <Box>
-                    <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                    <Box 
+                    sx={{ borderBottom: 1, borderColor: "divider", }}>
                         <Tabs
                             value={value}
                             onChange={handleChange}
