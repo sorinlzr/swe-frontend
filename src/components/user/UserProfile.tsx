@@ -95,7 +95,7 @@ export default function UserProfile(props: UserProfileProps) {
                 }
             )
             .then((response) => {
-                console.log("Favorite saved successfully:", response.data);
+                console.debug("Favorite saved successfully:", response.data);
                 const newFavorite = {
                     _id: response.data.data.id,
                     name: response.data.data.name,
