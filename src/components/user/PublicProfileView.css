@@ -73,3 +73,8 @@
     top: 5px;
     right: 5px;
 }
+
+.selectedItem{
+    background-color: #f4ba11;
+    color: white;
+}
