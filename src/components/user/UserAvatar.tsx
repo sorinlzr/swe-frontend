@@ -87,6 +87,7 @@ export default function UserAvatar({
                         sx={{
                             fontWeight: typographyFontWeight[size],
                             fontSize: typographyFontSize[size],
+                            fontFamily: 'Contrail One, sans-serif',
                         }}
                     >
                         {user.firstname}

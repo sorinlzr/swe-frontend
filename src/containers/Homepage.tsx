@@ -44,7 +44,12 @@ const Homepage = (props: HomepageProps) => {
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2, width: "auto" }}
+                sx={{ mt: 3, mb: 2, width: "auto",fontFamily: 'Contrail One, sans-serif', 
+                backgroundColor: '#ffffff1a',
+                '&:hover': {
+                backgroundColor: '#F4BA11',
+            },
+            }}
                 onClick={handleLogout}
             >
                 Sign Out
