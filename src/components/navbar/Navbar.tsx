@@ -61,8 +61,8 @@ export default function Navbar() {
     };
 
     return (
-        <Box>
-            <AppBar position="static">
+        <Box sx={{ pt: 9 }}>
+            <AppBar position="fixed">
                 <Toolbar>
                     <IconButton
                         size="large"
@@ -119,13 +119,13 @@ export default function Navbar() {
                             <ListItemText primary="Login" />
                         </ListItemButton>
                     )}
-                    <ListItemButton>
+                    <ListItemButton href="/global">
                         <PublicOutlinedIcon sx={{ marginRight: "10px" }} />
                         <ListItemText primary="Global View" />
                     </ListItemButton>
                     {isLoggedIn ? (
                         <>
-                            <ListItemButton>
+                            <ListItemButton href="/following">
                                 <FavoriteBorderOutlinedIcon
                                     sx={{ marginRight: "10px" }}
                                 />
