@@ -1,24 +1,38 @@
-@import url('https://fonts.googleapis.com/css2?family=Contrail+One&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Contrail+One&display=swap");
+
+html,
+body {
+    margin: 0;
+    font-family: "Contrail One", -apple-system, BlinkMacSystemFont, "Segoe UI",
+        "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+        "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+    overflow-y: auto;
+}
 
 body {
-  margin: 0;
-  font-family: 'Contrail One', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background: rgb(89,113,158);
-  background: linear-gradient(126deg, rgba(89,113,158,1) 55%, rgb(28, 26, 58) 100%);
-  color: white;
+    background: rgb(89, 113, 158);
+    background: linear-gradient(
+        126deg,
+        rgba(89, 113, 158, 1) 55%,
+        rgb(28, 26, 58) 100%
+    );
+    color: white;
 }
 
 code {
-  font-family: 'Contrail One', source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+    font-family: "Contrail One", source-code-pro, Menlo, Monaco, Consolas,
+        "Courier New", monospace;
+}
+
+.clickable {
+    cursor: pointer;
 }
 
 #root {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
 }

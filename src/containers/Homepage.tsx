@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { User } from "../models/User";
 import Logo from "../components/logo/Logo";
 import UserAvatar from "../components/user/UserAvatar";
+import { Tooltip } from "@mui/material";
 
 interface HomepageProps {
     currentUser: User;
@@ -30,13 +31,20 @@ const Homepage = (props: HomepageProps) => {
     return (
         <>
             <Logo height={"100px"} />
-            <div>
-                <h1>Welcome to Buzz!</h1>
+            <div
+                className="clickable"
+                onClick={() => {
+                    navigate("/global");
+                }}
+            >
+                <Tooltip placement={"top"} title="Explore">
+                    <h1>Welcome to Buzz!</h1>
+                </Tooltip>
             </div>
             <UserAvatar
                 user={currentUser}
                 isHorizontal={false}
-                hideName={false}
+                hideName={true}
                 size="large"
             />
             <h2>{"Hello, " + currentUser?.firstname}</h2>
@@ -44,12 +52,16 @@ const Homepage = (props: HomepageProps) => {
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2, width: "auto",fontFamily: 'Contrail One, sans-serif', 
-                backgroundColor: '#ffffff1a',
-                '&:hover': {
-                backgroundColor: '#F4BA11',
-            },
-            }}
+                sx={{
+                    mt: 3,
+                    mb: 2,
+                    width: "auto",
+                    fontFamily: "Contrail One, sans-serif",
+                    backgroundColor: "#ffffff1a",
+                    "&:hover": {
+                        backgroundColor: "#F4BA11",
+                    },
+                }}
                 onClick={handleLogout}
             >
                 Sign Out

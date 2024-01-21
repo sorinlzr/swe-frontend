@@ -51,11 +51,9 @@ export default function FollowingView() {
                     }
                 )
                 .then((response) => {
-                    console.debug("getting the followed users");
-                    console.debug(response);
                     if (response.status === 204) {
                         return;
-                    } else if (response.data.data.length > 0) {
+                    } else if (response.data.data.length) {
                         setFollowedUsers(response.data.data);
                     }
                     return;

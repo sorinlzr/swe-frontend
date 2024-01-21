@@ -230,7 +230,7 @@ export default function UserProfile(props: UserProfileProps) {
           <h2 className="favorites-heading">{user?.firstname}'s favorites</h2>
           <div className="favorites-grid">{renderFavorites()}</div>
 
-          <Dialog open={isModalOpen} onClose={handleCloseModal}>
+          <Dialog open={isModalOpen} onClose={handleCloseModal} fullWidth maxWidth="xs">
             <DialogTitle>Add a Favorite</DialogTitle>
             <DialogContent>
               <Select
