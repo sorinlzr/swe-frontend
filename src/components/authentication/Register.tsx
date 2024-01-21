@@ -36,15 +36,14 @@ export default function Register() {
           setRegistrationSuccess(true);
           setErrorMessage('');
           setFormData(initialFormData);
-          console.log('User successfully registered!');
+          console.debug('User successfully registered!');
         } else {
           setRegistrationSuccess(false);
           setErrorMessage('Error registering user');
           console.error('Error registering user');
         }
       } catch (error: any) {
-        console.error('Error:');
-        console.log(error);
+        console.error('Error while registering user: ', error);
 
         setRegistrationSuccess(false);
         if (error.response && error.response.data.error) {

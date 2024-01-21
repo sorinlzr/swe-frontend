@@ -48,7 +48,7 @@ export default function Login() {
                 console.error('Error logging in user');
             }
         } catch (error: any) {
-            console.error('Error:', error);
+            console.error('Error while logging in user:', error);
             setLoginSuccess(false);
             if (error.response && error.response.data.error) {
             setErrorMessage(error.response.data.error);

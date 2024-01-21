@@ -1,15 +1,48 @@
 import "./GlobalView.css";
 import axios from "axios";
+import { useCookies } from "react-cookie";
 import { useEffect, useState } from "react";
+import { JwtPayload } from "../models/JwtPayload";
+import { jwtDecode } from "jwt-decode";
 import { User } from "../models/User";
 import ErrorPage from "./error-page";
 import FavoriteContainer from "../containers/FavoriteContainer";
 
 export default function GlobalView() {
     const [users, setUsers] = useState<User[] | undefined>([]);
+    const [currentLoggedInUser, setCurrentLoggedInUser] = useState<
+        User | undefined
+    >();
     const [filteredUsers, setFilteredUsers] = useState<User[] | undefined>([]);
     const [fetchError, setFetchError] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState<string | null>("");
+
+    const [cookies, setCookie] = useCookies(["swe-backend-cookie"]);
+
+    useEffect(() => {
+        let decoded: JwtPayload;
+        if (cookies["swe-backend-cookie"]) {
+            decoded = jwtDecode(cookies["swe-backend-cookie"]);
+
+            axios
+                .get(
+                    `http://localhost:${process.env.REACT_APP_BACKEND_PORT}/api/users/${decoded.username}`,
+                    {
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded",
+                        },
+                        withCredentials: true,
+                    }
+                )
+                .then((response) => {
+                    setCurrentLoggedInUser(response.data.user);
+                    return;
+                })
+                .catch((error) => {
+                    console.error("Error fetching user:", error);
+                });
+        }
+    }, [cookies]);
 
     useEffect(() => {
         axios
@@ -80,16 +113,17 @@ export default function GlobalView() {
                             ? filteredUsers?.map((user) => (
                                   <FavoriteContainer
                                       key={user.id}
-                                      user={user}
+                                      renderedUser={user}
                                       showAllFavorites={false}
                                       category={selectedCategory}
+                                      currentLoggedInUser={currentLoggedInUser}
                                   />
                               ))
                             : null}
                     </>
                     {selectedCategory && filteredUsers?.length === 0 && (
                         <p className="header">
-                            Looks like no one has a favorite of any category.
+                            Looks like no one has a favorite of this category.
                         </p>
                     )}
                 </>

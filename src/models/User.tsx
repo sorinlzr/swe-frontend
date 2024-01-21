@@ -7,6 +7,6 @@ export interface User {
     username: string;
     email?: string;
     avatar?: string;
-    followedUsers?: User[];
+    followedUsers?: string[];
     favorites?: Favorite[];
 }

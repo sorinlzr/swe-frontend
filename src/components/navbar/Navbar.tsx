@@ -150,7 +150,7 @@ export default function Navbar() {
                                 />
                                 <ListItemText primary="My Profile" />
                             </ListItemButton>
-                            <ListItemButton onClick={handleLogout}>
+                            <ListItemButton onClick={handleLogout} href="/">
                                 <LogoutOutlinedIcon
                                     sx={{ marginRight: "10px" }}
                                 />
