@@ -11,8 +11,9 @@ import {
   Select,
   TextField,
   Tooltip,
+  debounce,
 } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { User } from "../../models/User";
 import { Favorite } from "../../models/Favorite";
 import UserAvatar from "./UserAvatar";
@@ -68,6 +69,22 @@ export default function UserProfile(props: UserProfileProps) {
         console.error("Error fetching categories:", error);
       });
   }, []);
+
+  const debouncedSearch = useCallback(
+    debounce((searchText: string) => {
+      if (searchText.trim() !== '') {
+        getSpotifyResults(
+          searchText,
+          selectedType === "Artist" ? "artists" : "songs"
+        );
+      }
+    }, 2000),
+    [selectedType]
+  );
+
+  useEffect(() => {
+    debouncedSearch(searchText);
+  }, [searchText, debouncedSearch]);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -276,10 +293,6 @@ export default function UserProfile(props: UserProfileProps) {
                     label="Searchtext"
                     value={searchText}
                     onChange={(e) => {
-                      getSpotifyResults(
-                        e.target.value,
-                        selectedType === "Artist" ? "artists" : "songs"
-                      );
                       setSearchText(e.target.value);
                     }}
                     fullWidth
