@@ -19,6 +19,21 @@ export default function GlobalView() {
 
     const [cookies, setCookie] = useCookies(["swe-backend-cookie"]);
 
+    function shuffle(array: any[]) {
+        var currentIndex = array.length, temporaryValue, randomIndex;
+    
+        while (0 !== currentIndex) {
+    
+          randomIndex = Math.floor(Math.random() * currentIndex);
+          currentIndex -= 1;
+    
+          temporaryValue = array[currentIndex];
+          array[currentIndex] = array[randomIndex];
+          array[randomIndex] = temporaryValue;
+        }
+        return array;
+      }
+
     useEffect(() => {
         let decoded: JwtPayload;
         if (cookies["swe-backend-cookie"]) {
@@ -51,12 +66,12 @@ export default function GlobalView() {
             )
             .then((response) => {
                 setUsers(response.data.data);
-                setFilteredUsers(
+                setFilteredUsers(shuffle(
                     response.data.data.filter(
                         (user: User) =>
                             user.favorites && user.favorites.length > 0
                     ) || []
-                );
+                ));
             })
             .catch((error) => {
                 console.error("Error fetching followed users:", error);
